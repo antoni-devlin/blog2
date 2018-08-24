@@ -1,8 +1,8 @@
-"""create db and posts table
+"""empty message
 
-Revision ID: 5da53b3c81c1
+Revision ID: d8c93530e2c9
 Revises: 
-Create Date: 2018-08-23 15:34:06.881683
+Create Date: 2018-08-24 11:48:23.966676
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '5da53b3c81c1'
+revision = 'd8c93530e2c9'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -22,10 +22,12 @@ def upgrade():
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('date_posted', sa.DateTime(), nullable=True),
     sa.Column('title', sa.String(length=80), nullable=False),
+    sa.Column('slug', sa.String(length=80), nullable=False),
     sa.Column('category', sa.String(length=80), nullable=True),
     sa.Column('draft', sa.Boolean(), nullable=True),
     sa.Column('body', sa.Text(), nullable=True),
     sa.PrimaryKeyConstraint('id'),
+    sa.UniqueConstraint('slug'),
     sa.UniqueConstraint('title')
     )
     op.create_index(op.f('ix_posts_date_posted'), 'posts', ['date_posted'], unique=False)

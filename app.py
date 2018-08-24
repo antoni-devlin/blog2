@@ -1,6 +1,6 @@
 from flask import Flask, url_for, render_template, request, flash, redirect
 from slugify import slugify
-from flask_sqlalchemy import SQLAlchemy
+from flask_sqlalchemy import SQLAlchemy, event
 from flask_migrate import Migrate
 from datetime import datetime
 from forms import *
@@ -24,12 +24,22 @@ class Post(db.Model):
     id = db.Column(db.Integer(), primary_key=True)
     date_posted = db.Column(db.DateTime(), index = True, default = datetime.utcnow)
     title = db.Column(db.String(80), unique=True, nullable=False)
+    slug = db.Column(db.String(80), unique=True, default = id, nullable=False)
     category = db.Column(db.String(80))
     draft = db.Column(db.Boolean(), default = True)
     body = db.Column(db.Text())
 
     def __repr__(self):
         return '<Post {}>'.format(self.body)
+# Automatic Slug generation (using slugify)
+    @staticmethod
+    def generate_slug(target, value, oldvalue, initiator):
+        if value and (not target.slug or value  != oldvalue):
+            target.slug = slugify(value)
+
+event.listen(Post.title, 'set', Post.generate_slug, retval=False)
+
+
 
 
 

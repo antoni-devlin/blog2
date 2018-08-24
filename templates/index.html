@@ -5,7 +5,7 @@
 <hr>
 
 {% for post in posts %}
-    <h3> {{post.title}}</h3>
+    <h3> {{post.title}} </h3>
     <sub>Category: {{post.category}} | Posted on {{post.date_posted.strftime('%d %B, %Y')}}</sub>
     {% if post.draft %}
         <p>Draft</p>
@@ -13,7 +13,7 @@
         <p> Not Draft </p>
     {% endif %}
     <p> {{post.body}} </p>
-
+<p> Slug: {{post.slug}} </p>
     <hr>
 {% endfor %}
 
