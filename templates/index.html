@@ -5,8 +5,9 @@
 <hr>
 
 {% for post in posts %}
-    <h3> {{post.title}} </h3>
+    <h3>  <a href="{{ url_for('byslug', slug=post.slug)}}">{{post.title}}</a>  </h3>
     <sub>Category: {{post.category}} | Posted on {{post.date_posted.strftime('%d %B, %Y')}}</sub>
+    <sub> <a href="{{url_for('edit_post', slug=post.slug)}}"> Edit </a> | <a href="{{url_for('delete_post', slug=post.slug)}}"> Delete</a> </sub>
     {% if post.draft %}
         <p>Draft</p>
     {% else %}

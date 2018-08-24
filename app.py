@@ -39,16 +39,7 @@ class Post(db.Model):
 
 event.listen(Post.title, 'set', Post.generate_slug, retval=False)
 
-
-
-
-
-
-# Slugify test
-# txt = "This is a test ---"
-# r = slugify(txt)
-# self.assertEqual(r, "this-is-a-test")
-
+#Home Page Route
 @app.route('/')
 @app.route('/index')
 def index():
@@ -69,9 +60,9 @@ def add_post():
     return render_template('add.html', form=form)
 
 # Edit Existing Post
-@app.route('/edit/<string:id>', methods=['GET', 'POST'])
-def edit_post(id):
-    post = Post.query.get(id)
+@app.route('/edit/<string:slug>', methods=['GET', 'POST'])
+def edit_post(slug):
+    post = Post.query.filter_by(slug=slug).first_or_404()
     form = AddEditPost(obj=post)
     if form.validate_on_submit():
         post.title = form.title.data
@@ -82,11 +73,18 @@ def edit_post(id):
         return redirect(url_for('index'))
     return render_template('add.html', form=form)
 
+@app.route('/delete/<string:slug>')
+def delete_post(slug):
+    Post.query.filter_by(slug=slug).delete()
+    db.session.commit()
+    return redirect(url_for('index'))
 
-@app.route('/posts/<int:id>')
-def showpost(id):
-    post = Post.query.get(id)
-    return render_template("post.html", post=post, pid=id )
+
+# Navigate to post by slug
+@app.route('/post/<string:slug>')
+def byslug(slug):
+    post = Post.query.filter_by(slug=slug).first_or_404()
+    return render_template("post.html", post=post, slug=slug)
 
 
 @app.route('/login')

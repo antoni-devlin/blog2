@@ -9,3 +9,5 @@ class AddEditPost(FlaskForm):
     draft = BooleanField('Draft')
     body = TextAreaField('Content Area')
     submit = SubmitField('Create Post')
+
+# class LoginForm(FlaskForm):
