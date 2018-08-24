@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1 style=" text-align:center "> Antoni Devlin's Blog</h1>
+<hr>
+
+{% for post in posts %}
+    <h3> {{post.title}}</h3>
+    <sub>Category: {{post.category}} | Posted on {{post.date_posted.strftime('%d %B, %Y')}}</sub>
+    {% if post.draft %}
+        <p>Draft</p>
+    {% else %}
+        <p> Not Draft </p>
+    {% endif %}
+    <p> {{post.body}} </p>
+
+    <hr>
+{% endfor %}
+
+
+{% endblock content %}

@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="">
+    <fieldset>
+        <legend> Create a new post </legend>
+    <form class="" action="{{ url_for('add_post') }}" method="POST" autocomplete="off" name="new_post">
+        Post title: <input type="text" name="title" value="Title" required><br>
+        Post Category:<select class="" name="" required><br>
+                                    <option value="volvo">Cat 1</option>
+                                    <option value="saab">Cat 2</option>
+                                    <option value="opel">Cat 3</option>
+                                    <option value="audi">Cat 4</option>
+                                </select>
+        Draft:<input type="checkbox" name="draft" value="true"><br>
+        Post Body:<input size="100" type="text" name="body" value="Post Content here."><br>
+        <input type="submit" name="submit" value="Create Post">
+    </fieldset>
+    </form>
+</div>
+
+{% endblock %}
