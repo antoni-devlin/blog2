@@ -13,7 +13,7 @@
     {% else %}
         <p> Not Draft </p>
     {% endif %}
-    <p> {{post.body}} </p>
+    <p> {{post.body | truncate(400) | safe}} </p>
 <p> Slug: {{post.slug}} </p>
     <hr>
 {% endfor %}
